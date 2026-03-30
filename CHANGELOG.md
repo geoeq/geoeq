@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.0.3] - 2026-03-30
+
+### Added
+
+- `sp.density()`: Unified density calculation function supporting variable state modes (`kind`), multiple output formats (`unit`), and basic (`mass`, `volume`) calculations.
+- `sp.atterberg()`: Unified function for plasticity index (`PI`), liquidity index (`LI`), and consistency index (`CI`).
+
+---
+
 ## [0.0.2] - 2026-03-27
 
 ### Changed

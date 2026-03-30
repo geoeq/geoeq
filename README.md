@@ -14,8 +14,7 @@ reusable code.
 
 ## Status
 
-**v0.0.2** is the current release (same API as v0.0.1; documentation uses the
-**GeoEq** name). It covers **soil property and phase-relationship formulas** --
+**v0.0.3** is the current release. It covers **soil property and phase-relationship formulas** --
 the building blocks for everything else in geotechnical engineering.
 
 Future releases will add effective stress, bearing capacity, settlement,
@@ -39,13 +38,16 @@ Requires Python 3.9 or later. No external dependencies.
 ```python
 from geoeq.soil import properties as sp
 
-# Dry unit weight from specific gravity and void ratio
-gamma_d = sp.dry_unit_weight(Gs=2.65, e=0.72)
+# Unified density function (with unit support and mass/volume options)
+gamma_d = sp.density(Gs=2.65, e=0.72, kind="dry", unit="kN/m3")
 print(f"Dry unit weight: {gamma_d:.2f} kN/m3")
 
-# Saturated and submerged unit weights
-gamma_sat = sp.saturated_unit_weight(Gs=2.65, e=0.72)
-gamma_sub = sp.submerged_unit_weight(Gs=2.65, e=0.72)
+# Choose output unit directly (kN/m3, kg/m3, pcf, g/cm3)
+rho_bulk = sp.density(Gs=2.65, e=0.72, S=0.8, kind="bulk", unit="kg/m3")
+print(f"Bulk density: {rho_bulk:.1f} kg/m3")
+
+# Or calculate directly from mass and volume
+sample_density = sp.density(mass=5.50, volume=0.003, unit="kN/m3")
 
 # Phase relations
 n = sp.porosity_from_void_ratio(0.72)
@@ -53,18 +55,14 @@ S = sp.degree_of_saturation(w=0.18, Gs=2.65, e=0.72)
 w = sp.water_content(S=0.80, Gs=2.65, e=0.72)
 e = sp.void_ratio_from_porosity(0.42)
 
-# Relative density
-Dr = sp.relative_density(e=0.60, e_max=0.85, e_min=0.45)
-
-# Atterberg limits
-PI = sp.plasticity_index(LL=48, PL=22)
-LI = sp.liquidity_index(w=35, PL=22, PI=26)
-CI = sp.consistency_index(w=35, LL=48, PI=26)
+# Unified Atterberg limits
+PI = sp.atterberg(LL=48, PL=22, kind="PI")
+all_indices = sp.atterberg(LL=48, PL=22, w=35, kind="all")
 ```
 
 ---
 
-## What is included in v0.0.2
+## What is included in v0.0.3
 
 ### Soil property and phase-relationship formulas
 
@@ -89,6 +87,9 @@ their source methods.
 - `dry_density(Gs, e)` -- dry density (kg/m3)
 - `bulk_density(Gs, e, S)` -- bulk density (kg/m3)
 
+**Unified API functions**
+- `density(Gs, e, S, mass, volume, kind, unit)` -- all density/unit weight formulas combined, supports custom units and fallback combinations.
+
 **Void ratio from other quantities**
 - `void_ratio_from_water_content(w, Gs, S)` -- compute e from w, Gs, S
 - `void_ratio_from_dry_unit_weight(gamma_d, Gs)` -- compute e from gamma_d
@@ -100,6 +101,7 @@ their source methods.
 - `plasticity_index(LL, PL)` -- PI = LL - PL
 - `liquidity_index(w, PL, PI)` -- LI
 - `consistency_index(w, LL, PI)` -- CI
+- `atterberg(LL, PL, w, kind)` -- unified limits function
 
 ### Core utilities
 
