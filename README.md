@@ -50,10 +50,14 @@ print(f"Bulk density: {rho_bulk:.1f} kg/m3")
 sample_density = sp.density(mass=5.50, volume=0.003, unit="kN/m3")
 
 # Phase relations
-n = sp.porosity_from_void_ratio(0.72)
-S = sp.degree_of_saturation(w=0.18, Gs=2.65, e=0.72)
+n = sp.porosity(e=0.72)
+S = sp.saturation(w=0.18, Gs=2.65, e=0.72)
 w = sp.water_content(S=0.80, Gs=2.65, e=0.72)
-e = sp.void_ratio_from_porosity(0.42)
+e = sp.void_ratio(n=0.42)
+
+# Relative density
+Dr_void = sp.relative_density(e=0.60, e_max=0.85, e_min=0.45, kind="void")
+Dr_density = sp.relative_density(rho=1500, rho_max=1600, rho_min=1400, kind="density")
 
 # Unified Atterberg limits
 PI = sp.atterberg(LL=48, PL=22, kind="PI")
@@ -70,37 +74,20 @@ All functions validate inputs, document units in docstrings, and reference
 their source methods.
 
 **Void ratio and porosity**
-- `void_ratio_from_porosity(n)` -- convert porosity to void ratio
-- `porosity_from_void_ratio(e)` -- convert void ratio to porosity
+- `void_ratio(n, w, Gs, S, Vv, Vs)` -- compute void ratio
+- `porosity(e, Vv, V)` -- compute porosity
 
 **Degree of saturation and water content**
-- `degree_of_saturation(w, Gs, e)` -- compute S from water content, Gs, and e
-- `water_content(S, Gs, e)` -- compute w from saturation, Gs, and e
+- `saturation(w, Gs, e, Vw, Vv)` -- compute saturation
+- `water_content(S, Gs, e, Mw, Ms, Ww, Ws)` -- compute water content
 
-**Unit weights**
-- `dry_unit_weight(Gs, e)` -- dry unit weight (kN/m3)
-- `saturated_unit_weight(Gs, e)` -- saturated unit weight (kN/m3)
-- `bulk_unit_weight(Gs, e, S)` -- moist/total unit weight (kN/m3)
-- `submerged_unit_weight(Gs, e)` -- buoyant unit weight (kN/m3)
-
-**Density**
-- `dry_density(Gs, e)` -- dry density (kg/m3)
-- `bulk_density(Gs, e, S)` -- bulk density (kg/m3)
-
-**Unified API functions**
+**Density and Unit Weights**
 - `density(Gs, e, S, mass, volume, kind, unit)` -- all density/unit weight formulas combined, supports custom units and fallback combinations.
 
-**Void ratio from other quantities**
-- `void_ratio_from_water_content(w, Gs, S)` -- compute e from w, Gs, S
-- `void_ratio_from_dry_unit_weight(gamma_d, Gs)` -- compute e from gamma_d
-
 **Relative density**
-- `relative_density(e, e_max, e_min)` -- density index for granular soils
+- `relative_density(e, e_max, e_min, rho, rho_max, rho_min, kind)` -- relative density using 'void' or 'density'
 
 **Atterberg limits and consistency**
-- `plasticity_index(LL, PL)` -- PI = LL - PL
-- `liquidity_index(w, PL, PI)` -- LI
-- `consistency_index(w, LL, PI)` -- CI
 - `atterberg(LL, PL, w, kind)` -- unified limits function
 
 ### Core utilities
