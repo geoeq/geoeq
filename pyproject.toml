@@ -7,7 +7,7 @@ name = "geoeq"
 version = "0.0.3"
 description = "A Python library for geotechnical engineering calculations."
 readme = "README.md"
-license = "MIT"
+
 requires-python = ">=3.9"
 authors = [
     {name = "Ripon Chandra Malo"},
@@ -54,6 +54,9 @@ Documentation = "https://geoeq.github.io"
 Repository = "https://github.com/geoeq/geoeq"
 Changelog = "https://geoeq.github.io/blog"
 Issues = "https://github.com/geoeq/geoeq/issues"
+
+[tool.setuptools]
+license-files = []
 
 [tool.setuptools.packages.find]
 where = ["src"]
