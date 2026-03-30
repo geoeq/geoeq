@@ -49,10 +49,11 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/riponcm/geoeq"
-Repository = "https://github.com/riponcm/geoeq"
-Changelog = "https://github.com/riponcm/geoeq/blob/main/CHANGELOG.md"
-Issues = "https://github.com/riponcm/geoeq/issues"
+Homepage = "https://geoeq.github.io"
+Documentation = "https://geoeq.github.io"
+Repository = "https://github.com/geoeq/geoeq"
+Changelog = "https://geoeq.github.io/blog"
+Issues = "https://github.com/geoeq/geoeq/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
