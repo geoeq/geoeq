@@ -1,21 +1,43 @@
 """
 GeoEq -- A Python library for geotechnical engineering calculations.
-
-Install the package as ``geoeq`` (``pip install geoeq``); import ``geoeq`` in code.
-
-Version 0.0.3 provides soil property and phase-relationship formulas.
-Future versions will add effective stress, bearing capacity, settlement,
-consolidation, earth pressure, slope stability, pile capacity,
-and liquefaction assessment.
-
-Quick start
------------
->>> from geoeq.soil import properties as sp
->>> sp.dry_unit_weight(Gs=2.65, e=0.72)
-15.11...
 """
 
-__version__ = "0.0.3"
+from geoeq.soil.properties import (
+    void_ratio,
+    porosity,
+    saturation,
+    water_content,
+    density,
+    relative_density,
+    atterberg,
+)
+from geoeq.soil.sieve import sieve_ana
+from geoeq.soil.hydrometer import hydro_ana
+from geoeq.soil.grain_size import (
+    grain_d10,
+    grain_d30,
+    grain_d60,
+    grain_Cu,
+    grain_Cc,
+    process_combined_data,
+)
+from geoeq.viz.grain_size import grain_size_plot
 
-from . import core
-from . import soil
+__all__ = [
+    "void_ratio",
+    "porosity",
+    "saturation",
+    "water_content",
+    "density",
+    "relative_density",
+    "atterberg",
+    "sieve_ana",
+    "hydro_ana",
+    "grain_d10",
+    "grain_d30",
+    "grain_d60",
+    "grain_Cu",
+    "grain_Cc",
+    "process_combined_data",
+    "grain_size_plot",
+]

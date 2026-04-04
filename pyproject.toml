@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "geoeq"
-version = "0.0.3"
+version = "0.0.4"
 description = "A Python library for geotechnical engineering calculations."
 readme = "README.md"
 
@@ -38,7 +38,11 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering",
 ]
-dependencies = []
+dependencies = [
+    "numpy>=1.20.0",
+    "matplotlib>=3.5.0",
+    "scipy>=1.7.0",
+]
 
 [project.optional-dependencies]
 dev = [
