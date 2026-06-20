@@ -1,24 +1,77 @@
-.DS_Store
-
+# ----- Python ---------------------------------------------------------------
 __pycache__/
 *.py[cod]
 *$py.class
-*.egg-info/
-*.egg
-dist/
-build/
-.eggs/
 *.so
+*.egg
+*.egg-info/
+
+# ----- Build artefacts ------------------------------------------------------
+build/
+dist/
+.eggs/
+*.whl
+*.tar.gz
+
+# ----- Test & coverage ------------------------------------------------------
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
 .tox/
+.nox/
+coverage.xml
+*.cover
+
+# ----- Environments ---------------------------------------------------------
 .venv/
 venv/
 env/
 .env
-*.whl
+.envrc
 
-Project guide/
+# ----- OS / editor junk -----------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ----- LaTeX build artefacts (keep .tex + figures; drop intermediate) -------
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.toc
+docs/*.lof
+docs/*.lot
+docs/*.fls
+docs/*.fdb_latexmk
+docs/*.synctex.gz
+docs/*.idx
+docs/*.ilg
+docs/*.ind
+
+# ----- Secrets --------------------------------------------------------------
+.pypirc
+.env.local
+*.pem
+*.key
+
+# ----- Local-only sibling repos and notes -----------------------------------
 geoeq.github.io/
+Project guide/
+test_and_tutorial/
+AI_GUIDE.md
+CLAUDE.md
 
+# ----- AI tooling local state (NEVER commit) --------------------------------
+.claude/
+.projectmem/
+
+# ----- Jupyter -------------------------------------------------------------
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+*-checkpoint.ipynb

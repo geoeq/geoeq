@@ -4,13 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "geoeq"
-version = "0.0.4"
-description = "A Python library for geotechnical engineering calculations."
+version = "0.1.0"
+description = "A clean, validated Python library for the complete onshore geotechnical workflow — lab tests, site investigation, design, dynamics, and data exchange."
 readme = "README.md"
+license = {text = "MIT"}
 
 requires-python = ">=3.9"
 authors = [
-    {name = "Ripon Chandra Malo"},
+    {name = "Ripon Chandra Malo", email = "riponce.buet@gmail.com"},
+]
+maintainers = [
+    {name = "Ripon Chandra Malo", email = "riponce.buet@gmail.com"},
 ]
 keywords = [
     "geoeq",
@@ -21,22 +25,52 @@ keywords = [
     "soil properties",
     "geotechnical interpretation",
     "geotechnical formulas",
+    "soil classification",
+    "USCS",
+    "AASHTO",
+    "Atterberg limits",
+    "direct shear",
+    "triaxial",
+    "Mohr circle",
+    "Proctor compaction",
+    "oedometer",
+    "consolidation",
+    "permeability",
+    "CBR",
     "bearing capacity",
     "foundation",
     "settlement",
+    "SPT",
+    "CPT",
+    "pressuremeter",
+    "plate load test",
+    "vane shear",
+    "pile load test",
+    "DCP",
+    "slug test",
+    "pumping test",
+    "site investigation",
 ]
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
     "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Education",
+    "Typing :: Typed",
 ]
 dependencies = [
     "numpy>=1.20.0",
@@ -53,14 +87,15 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://geoeq.github.io"
-Documentation = "https://geoeq.github.io"
-Repository = "https://github.com/geoeq/geoeq"
-Changelog = "https://geoeq.github.io/blog"
-Issues = "https://github.com/geoeq/geoeq/issues"
+Homepage      = "https://geoeq.github.io"
+Documentation = "https://geoeq.github.io/user-guide.html"
+Repository    = "https://github.com/geoeq/geoeq"
+Issues        = "https://github.com/geoeq/geoeq/issues"
+Changelog     = "https://github.com/geoeq/geoeq/blob/main/CHANGELOG.md"
+Source        = "https://github.com/geoeq/geoeq"
 
 [tool.setuptools]
-license-files = []
+license-files = ["LICENSE"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

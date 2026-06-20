@@ -1,3 +1,20 @@
 include LICENSE
 include README.md
 include CHANGELOG.md
+include SECURITY.md
+include Implementation.md
+include pyproject.toml
+
+# Ship the type marker
+recursive-include src/geoeq py.typed
+
+# Exclude build / test / dev artefacts from the sdist
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude .DS_Store
+prune tests
+prune docs
+prune examples
+prune geoeq.github.io
+prune .projectmem
+prune Project guide

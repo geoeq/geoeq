@@ -1,245 +1,261 @@
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/geoeq/geoeq/main/docs/assets/logo-animated.svg" alt="GeoEq" width="160" />
+
 # GeoEq
 
-**A clean, validated Python library for geotechnical engineering calculations.**
+**Geotechnical engineering, solved in Python.**
 
-The installable package name is **`geoeq`** (like **NumPy** / `numpy`). **GeoEq** is the project name used in documentation and publications.
+A clean, validated, MIT-licensed library for the complete onshore geotechnical workflow — laboratory characterisation, site investigation, engineering design, soil dynamics, and data exchange — under a single flat namespace.
 
-GeoEq brings common geotechnical formulas from laboratory practice and textbooks into one consistent, validated, and well-documented Python package. It is built for engineers, students, and researchers who want to replace repetitive spreadsheet work with clean, reusable code.
+<p>
+  <a href="https://pypi.org/project/geoeq/"><img src="https://img.shields.io/pypi/v/geoeq.svg?color=1e4d8f&label=pypi" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/geoeq/"><img src="https://img.shields.io/pypi/pyversions/geoeq.svg?color=2563a8" alt="Python versions"></a>
+  <a href="https://pypi.org/project/geoeq/"><img src="https://img.shields.io/pypi/dm/geoeq.svg?color=3b82c4&label=downloads" alt="PyPI downloads"></a>
+  <a href="https://github.com/geoeq/geoeq/stargazers"><img src="https://img.shields.io/github/stars/geoeq/geoeq?style=flat&color=e8a825&label=stars" alt="GitHub stars"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-1e4d8f.svg" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/tests-563_passing-27ae60" alt="563 tests passing">
+  <img src="https://img.shields.io/badge/functions-170+-1e4d8f" alt="170+ functions">
+</p>
+
+<p>
+  <a href="#installation"><b>Install</b></a> ·
+  <a href="#quick-start"><b>Quick start</b></a> ·
+  <a href="#capabilities"><b>Capabilities</b></a> ·
+  <a href="https://geoeq.github.io"><b>Website</b></a> ·
+  <a href="https://geoeq.github.io/user-guide.html"><b>Guide</b></a>
+</p>
+
+<br/>
+
+<img src="https://raw.githubusercontent.com/geoeq/geoeq/main/docs/assets/hero.png" alt="GeoEq triptych — stress profile, bearing capacity vs footing width, liquefaction triggering chart" width="900" />
+
+</div>
+
+---
+
+## The problem
+
+Geotechnical analysis still runs on spreadsheets. One tab per soil layer, copy-pasted Boussinesq equations, magic-number unit conversions, `=IF()` ladders nobody else can read six months later. Reports are non-reproducible. Calculations get re-done from scratch every project. New engineers re-derive Terzaghi every time they touch a footing.
+
+## The solution
+
+`geoeq` is one flat, validated Python library covering the full onshore geotechnical workflow — lab tests through site investigation through design through dynamics — in 170+ functions under a single import. Plain dictionaries in, plain dictionaries out. Every formula cites its textbook source. Every function is validated against published values.
+
+```python
+import geoeq as ge
+
+ge.density(Gs=2.65, e=0.72, kind="saturated", unit="kN/m3")           # 19.6 kN/m^3
+ge.spt_friction_angle(N=15, sigma_v=80, method="hatanaka")            # 33.2 deg
+ge.bearing_capacity(c=10, gamma=18, Df=1, B=2, phi=30, method="meyerhof")
+ge.liquefaction_fos(CSR=0.20, CRR=0.18, Mw=7.0)                       # {'FS': 0.95, ...}
+```
+
+---
+
+## Installation
 
 ```bash
 pip install geoeq
 ```
 
-Requires Python 3.9+. Dependencies: `numpy`, `matplotlib`, `scipy`.
+Python 3.9+ on any platform. Dependencies: `numpy`, `matplotlib`, `scipy` — nothing else.
+
+```python
+import geoeq as ge
+```
+
+After import, every public function is a top-level attribute of `ge`. You never need to remember which submodule a function lives in.
 
 ---
 
-## 🧪 What GeoEq Can Do
+## Quick start
 
-### Ch. 2 — Particle Size Analysis
+A complete end-to-end screen of a multi-layer site, in fifteen lines.
+
+```python
+import geoeq as ge
+
+# 1. Define a layered profile with a water table
+p = ge.SoilProfile([
+    (0, 2,  ge.Soil("Fill",       gamma=18)),
+    (2, 8,  ge.Soil("Soft Clay",  gamma=17, gamma_sat=18.5,
+                                  phi=0, c=25, Cc=0.27, e=0.92)),
+    (8, 20, ge.Soil("Dense Sand", gamma=19, gamma_sat=20.5, phi=35)),
+], water_table=2.0)
+
+print(p.stress_at(10))
+# {'sigma': 188.0, 'u': 78.48, 'sigma_eff': 109.52}
+
+# 2. Bearing capacity of a 3 m square footing
+bc = ge.bearing_capacity(c=25, gamma=18.5 - 9.81, Df=2, B=3, L=3,
+                         phi=0, method="meyerhof")
+print(f"q_u = {bc['q_u']:.0f} kPa")    # q_u = 192 kPa
+
+# 3. Liquefaction triggering check (NCEER simplified procedure)
+csr = ge.liquefaction_csr(amax=0.25, sigma_v=120, sigma_v_eff=70, z=6, Mw=7.0)
+crr = ge.liquefaction_crr(N160cs=12, method="youd_2001")
+fs  = ge.liquefaction_fos(csr["CSR"], crr["CRR"], Mw=7.0)
+print(fs)
+# {'FS': 0.58, 'liquefies': True, ...}
+```
+
+---
+
+## Capabilities
+
+A working summary of what ships in v0.1.0. The complete per-function reference lives in the [handbook](docs/GeoEq-Handbook.tex) and the [online guide](https://geoeq.github.io/user-guide.html).
+
+### Soil properties and classification
+
 | Function | Description |
-| :--- | :--- |
-| `sp.sieve_ana()` | Sieve analysis with ASTM, BS, and IS standard mapping |
-| `sp.hydro_ana()` | Full ASTM D7928 hydrometer analysis (Stokes' Law) |
-| `sp.grain_size_plot()` | Publication-ready semi-log grain size distribution plots |
-| `sp.grain_d10/d30/d60()` | Log-linear interpolated Dₓ values in mm |
-| `sp.grain_Cu()` | Uniformity Coefficient (D₆₀ / D₁₀) |
-| `sp.grain_Cc()` | Coefficient of Curvature (D₃₀² / D₁₀·D₆₀) |
+| :-- | :-- |
+| `ge.void_ratio()` · `ge.porosity()` · `ge.specific_gravity()` | Phase volumetrics |
+| `ge.density()` | One function — dry / saturated / bulk / submerged, in kN/m³ or pcf |
+| `ge.saturation()` · `ge.water_content()` | Phase relations |
+| `ge.relative_density()` | Dr from void ratio or dry density limits |
+| `ge.atterberg()` · `ge.activity()` · `ge.sensitivity()` · `ge.liquidity_index()` | Index correlations |
+| `ge.classify_uscs()` · `ge.classify_aashto()` · `ge.plasticity_chart()` | ASTM D2487 · AASHTO M145 |
 
-### Ch. 3 — Soil Properties
+### Laboratory testing
+
+| Suite | Functions |
+| :-- | :-- |
+| **Particle size** | `sieve_ana` · `hydro_ana` · `grain_size_plot` · `grain_d10/d30/d60` · `grain_Cu` · `grain_Cc` |
+| **Shear strength** | `direct_shear` · `triaxial` · `unconfined` · `mohr_circle` |
+| **Consolidation** | `oedometer` · `preconsolidation` · `compression_index` · `cv` (root + log time) |
+| **Compaction** | `proctor` · `zav_line` · `saturation_line` · `relative_compaction` |
+| **Permeability** | `constant_head` · `falling_head` |
+| **Atterberg test** | `liquid_limit_test` · `flow_curve_plot` |
+| **CBR** | `cbr_test` · `cbr_plot` |
+
+### Site investigation
+
+| Suite | Functions |
+| :-- | :-- |
+| **SPT** | `spt_n60` · `spt_n160` (3 methods) · `spt_n160cs` · `spt_friction_angle` (3) · `spt_su` (2) · `spt_dr` (3) · `spt_modulus` (6 soils) |
+| **CPT** | `cpt_normalize` · `cpt_ic` · `cpt_sbt` (Robertson) · `cpt_friction_angle` · `cpt_su` · `cpt_dr` · `cpt_modulus` · `cpt_sbt_plot` |
+| **Field vane** | `vane_su` · `vane_correction` (Bjerrum) · `vane_remolded` |
+| **Pressuremeter** | `pmt_parameters` · `pmt_modulus` · `pmt_su` · `pmt_bearing` · `pmt_settlement` · `pmt_ko` |
+| **Plate load** | `plt_bearing` (3 criteria) · `plt_subgrade_modulus` · `plt_settlement_correction` · `plt_elastic_modulus` |
+| **Pile load tests** | `davisson` · `chin` · `de_beer` · `hansen_80` · `fhwa_5_percent` · `case_method` · `hiley` · `danish_formula` · `enr` |
+| **Field permeability** | `slug_test` (Hvorslev) · `pumping_test_confined` · `pumping_test_unconfined` (Thiem) · `lefranc_test` |
+| **Field CBR / DCP** | `dcp_cbr` (Webster · TRL · Kleyn) · `field_cbr_test` |
+
+### Engineering design
+
+| Suite | Functions |
+| :-- | :-- |
+| **Effective stress** | `total_stress` · `pore_pressure` · `effective_stress` · `capillary_rise` · `stress_plot` |
+| **Seepage** | `darcy_flow` · `hydraulic_gradient` · `critical_gradient` · `equivalent_k` · `flow_net` |
+| **Stress distribution** | `boussinesq_point/line/strip/circular/rect` · `westergaard_point` · `newmark_influence` · `stress_2to1` · `stress_isobar_plot` |
+| **Bearing capacity** | Terzaghi · Meyerhof · Hansen · Vesic — shape, depth, inclination factors · `bearing_capacity_plot` |
+| **Settlement** | `settlement_immediate` (Janbu) · `settlement_primary` (NC/OC/crossing) · `settlement_secondary` · `settlement_schmertmann` (1978) · `time_factor` ↔ `consolidation_degree` · `settlement_time_plot` |
+| **Earth pressure** | `K0` (Jaky · Mayne-Kulhawy) · `Ka` / `Kp` (Rankine · Coulomb) · `earth_pressure` · `tension_crack_depth` · `earth_pressure_plot` |
+| **Retaining walls** | `wall_overturning` · `wall_sliding` · `wall_bearing` (kern check) · `sheet_pile` (Blum) |
+| **Pile design** | `pile_end_bearing` (Meyerhof · Vesic · Skempton) · `pile_skin_friction` (alpha · beta · lambda) · `pile_capacity` · `pile_group_efficiency` · `pile_settlement` (Vesic) |
+| **Slope stability** | `infinite_slope` (with seepage) · `culmann` · `taylor_stability` · `bishop` (iterative) · `taylor_chart_plot` |
+
+### Soil dynamics
+
 | Function | Description |
-| :--- | :--- |
-| `sp.void_ratio()` | Void ratio from porosity, or volumes |
-| `sp.porosity()` | Porosity from void ratio, or volumes |
-| `sp.density()` | Dry, saturated, bulk, submerged unit weight — any unit system |
-| `sp.saturation()` | Degree of saturation from phase params or volumes |
-| `sp.water_content()` | Water content from masses or phase parameters |
-| `sp.relative_density()` | Dr from void ratio limits or dry density limits |
-| `sp.atterberg()` | Plasticity Index, Liquidity Index, Consistency Index |
+| :-- | :-- |
+| `gmax()` · `gmax_hardin()` | G<sub>max</sub> from V<sub>s</sub> or Hardin & Black (1968) |
+| `modulus_reduction()` | G/G<sub>max</sub> — Darendeli (2001), Vucetic-Dobry (1991) |
+| `damping_ratio()` | Equivalent-linear damping (Darendeli + Hardin-Drnevich) |
+| `depth_reduction()` | r<sub>d</sub> from Idriss (1999), Liao-Whitman (1986), Cetin et al. (2004) |
+| `liquefaction_csr()` | Seed-Idriss (1971) cyclic stress ratio |
+| `liquefaction_crr()` | CRR — Youd et al. (2001), Idriss-Boulanger (2008) SPT/CPT, Andrus-Stokoe (2000) V<sub>s</sub> |
+| `magnitude_scaling_factor()` | Idriss · NCEER · Boulanger-Idriss (2014) |
+| `liquefaction_fos()` | FS<sub>L</sub> = CRR · MSF · K<sub>σ</sub> · K<sub>α</sub> / CSR |
+| `gmax_curves_plot()` · `liquefaction_chart()` | Publication-quality charts |
 
----
-
-## 📖 Quick Start
-
-```python
-import geoeq as sp
-
-# --- Ch. 2: Particle Size Analysis ---
-
-# 1. Sieve Analysis (ASTM, BS, or IS designations)
-res = sp.sieve_ana(
-    opening=["3/4\"", "#4", "#10", "#40", "#200"],
-    mass_retained=[0, 40, 60, 105, 56],
-    standard="ASTM",
-    total_mass=300.0
-)
-print(res["percent_finer"])  # array of % passing values
-
-# 2. Hydrometer Analysis (ASTM D7928)
-h_res = sp.hydro_ana(
-    reading=[52, 48, 44, 36, 25],
-    time=[1, 2, 5, 15, 60],    # minutes
-    T=22.0,                    # temperature °C
-    Gs=2.65,
-    Ws=50.0                    # dry mass of soil (g)
-)
-print(h_res["diameter"])      # equivalent particle diameters in mm
-
-# 3. Publication-Ready Grain Size Plot
-sp.grain_size_plot(
-    {"Sieve": res, "Hydrometer": h_res},
-    smooth=True,           # 1000-point PCHIP interpolation
-    annotation=True,       # label each data source in legend
-    D_para=True,           # draw D10, D30, D60 projection lines
-    Cu_para=True,
-    Cc_para=True,
-    param_pos="top right", # or "top left", "bottom right", (x, y)
-    color="black",
-    marker="o",
-    save_as="grain_size.pdf"  # PNG, SVG, PDF, EPS all supported
-)
-
-# 4. Extract Parameters
-d10 = sp.grain_d10(res)
-cu  = sp.grain_Cu(res)
-cc  = sp.grain_Cc(res)
-print(f"D10={d10:.3f} mm  Cu={cu:.2f}  Cc={cc:.2f}")
-```
+### Layered ground model
 
 ```python
-# --- Ch. 3: Soil Properties ---
+clay = ge.Soil("Soft Clay", gamma=17, gamma_sat=18.5, phi=0, c=25, e=0.9)
 
-# Void ratio & porosity
-e = sp.void_ratio(n=0.42)        # e = n / (1 - n)
-n = sp.porosity(e=0.72)          # n = e / (1 + e)
+p = ge.SoilProfile([
+    (0, 2,  ge.Soil("Fill",       gamma=18)),
+    (2, 8,  clay),
+    (8, 20, ge.Soil("Dense Sand", gamma=19, gamma_sat=20.5, phi=35)),
+], water_table=1.5)
 
-# Unit weights — all 4 kinds, any unit system
-gamma_d   = sp.density(Gs=2.65, e=0.72, kind="dry",       unit="kN/m3")
-gamma_sat = sp.density(Gs=2.65, e=0.72, kind="saturated", unit="kN/m3")
-gamma_sub = sp.density(Gs=2.65, e=0.72, kind="submerged", unit="kN/m3")
-gamma_b   = sp.density(Gs=2.65, e=0.72, S=0.8, kind="bulk", unit="pcf")
-
-# Phase relations
-S = sp.saturation(w=0.18, Gs=2.65, e=0.72)          # S = w·Gs / e
-w = sp.water_content(S=0.80, Gs=2.65, e=0.72)        # w = S·e / Gs
-
-# Relative density (Dr)
-Dr = sp.relative_density(e=0.60, e_max=0.85, e_min=0.45, kind="void")
-print(f"Dr = {Dr:.1%}")   # → Dr = 62.5%  (Medium Dense)
-
-# Atterberg limits
-PI = sp.atterberg(LL=48, PL=22, kind="PI")
-all_idx = sp.atterberg(LL=48, PL=22, w=35, kind="all")
-print(all_idx)  # → {"PI": 26, "LI": 0.50, "CI": 0.50}
+p.effective_stress(10)   # σ' at z = 10 m
+p.plot()                 # publication-quality stress profile
 ```
 
----
+### Data I/O
 
-## 📊 Grain Size Plot — Full Customization
-
-`sp.grain_size_plot()` wraps Matplotlib and passes all standard **Line2D keyword arguments** directly to the renderer. Everything you can do with `ax.plot()`, you can do here.
-
-```python
-sp.grain_size_plot(
-    data,
-    # --- GeoEq Parameters ---
-    smooth=True,           # bool: high-res PCHIP curve (1000 points)
-    annotation=True,       # bool: show Sieve / Hydro legend
-    D_para=True,           # bool: D10, D30, D60 red dotted projection lines
-    Cu_para=True,          # bool: show Cu in parameter box
-    Cc_para=True,          # bool: show Cc in parameter box
-    param_pos="top right", # str or (x, y): parameter box position
-    save_as="figure.pdf",  # str: any Matplotlib format (.png .svg .pdf .eps)
-    ax=None,               # matplotlib Axes: embed into an existing figure
-    # --- All Matplotlib kwargs ---
-    color="#1e4d8f",
-    linewidth=1.8,
-    linestyle="-",
-    alpha=0.9,
-    marker="o",
-    markersize=6,
-    markerfacecolor="white",
-    markeredgecolor="#1e4d8f",
-    markeredgewidth=1.2,
-)
-```
-
-### Multi-Dataset (Combined Sieve + Hydrometer)
-Pass a **dictionary** of named datasets. GeoEq stitches them into one gapless smooth curve and applies automatic marker cycling per source — squares for the first dataset, stars for the second, etc.
-
-```python
-sp.grain_size_plot(
-    {"Sieve Analysis": s_res, "Hydrometer Analysis": h_res},
-    smooth=True,
-    annotation=True,    # shows both names in the legend
-)
-```
-
-### Embedding in a Multi-Panel Report Figure
-The function accepts an existing `ax` and returns the `fig` object for further customization:
-
-```python
-import matplotlib.pyplot as plt
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 7))
-
-sp.grain_size_plot(s_res, ax=ax1, smooth=True, color="navy")
-
-ax2.plot(depth, settlement)
-ax2.set_title("Settlement Curve")
-
-plt.savefig("combined_report.pdf", bbox_inches="tight", dpi=300)
-```
+| Function | Description |
+| :-- | :-- |
+| `read_csv()` | Geotech CSV with auto-header and units-row detection |
+| `read_ags()` | AGS4 format (UK / Australia / NZ ground-investigation standard) |
+| `read_gef()` | GEF-CPT format (Dutch standard) |
+| `CPT()` · `.from_gef()` · `.from_ags()` | CPT container class |
 
 ---
 
-## 🗂️ Return Value Reference
+## Design principles
 
-All analysis functions return a **plain Python dictionary** so results work seamlessly with Pandas, NumPy, and Matplotlib.
-
-### `sp.sieve_ana()` returns:
-| Key | Description |
-| :--- | :--- |
-| `"diameter"` | Nominal sieve opening in mm (same as `"opening"`) |
-| `"opening"` | Alias for `"diameter"` |
-| `"mass_retained"` | Mass on each sieve (g) |
-| `"percent_retained"` | % of total mass on each sieve |
-| `"cumulative_retained"` | Cumulative % retained |
-| `"percent_finer"` | **% passing — your primary Y-axis data** |
-| `"total_mass"` | Total specimen mass used |
-
-### `sp.hydro_ana()` returns:
-| Key | Description |
-| :--- | :--- |
-| `"diameter"` | Equivalent particle diameter D (mm) via Stokes' Law |
-| `"percent_finer"` | Corrected percent finer P (%) |
-| `"reading"` | Corrected hydrometer readings (Rc) |
-| `"depth"` | Effective depth L (cm) for each reading |
-| `"time"` | Elapsed time (minutes) |
+- **Flat API.** `import geoeq as ge`, then call functions. No deep import chains, no class hierarchies.
+- **Validated inputs.** Every function checks physical meaningfulness (porosity ≤ 1, saturation ≤ 1, etc.) with engineer-readable errors.
+- **Traceable formulas.** Every docstring cites the textbook section or original paper. No mystery constants.
+- **No magic.** Plain `dict` returns, Matplotlib figures. Inspect, slice, feed into Pandas, do whatever you would do with NumPy output.
+- **Test-backed.** 563 tests across 170+ functions, all passing. Textbook values are spot-checked: Fadum I<sub>5</sub>(1,1) = 0.1752; Meyerhof N-factors at φ = 30°; Boussinesq circular at z = R; Rankine K<sub>a</sub> / K<sub>p</sub>; Hardin & Drnevich plasticity exponent k.
+- **Publication quality.** 300 DPI figures, semi-log axes, shaded ASTM particle zones, red-dashed D<sub>x</sub> projection lines out of the box.
+- **MIT forever.** Commercial consulting, in-house tools, research, teaching. No exceptions, no dual licensing.
 
 ---
 
-## 🏗️ Design Principles
-
-- **Flat API** — everything is importable as `import geoeq as sp`; no long module chains.
-- **Validated inputs** — every function checks that values are physically meaningful (e.g., porosity cannot exceed 1, saturation cannot exceed 1).
-- **Traceable formulas** — docstrings cite the exact source (textbook section, ASTM standard).
-- **No magic** — returns plain dicts and Matplotlib figures; nothing hidden.
-- **Publication quality** — 300 DPI export, professional shaded zones, red-dotted Dx lines, and a clean parameter box out of the box.
-
----
-
-## 🗺️ Roadmap
-
-| Version | Scope |
-|---------|-------|
-| **v0.0.4** ✅ **current** | Particle size analysis — sieve, hydrometer, professional plotting |
-| v0.0.3 | Atterberg limits, unified density function |
-| v0.0.1–v0.0.2 | Soil phase relationships (16 functions) |
-| v0.1.x | Effective stress, pore pressure, seepage |
-| v0.2.x | Shallow foundations, bearing capacity, settlement |
-| v0.3.x | Soil classification (USCS/AASHTO), SPT/CPT correlations |
-| v0.4.x | Earth pressure, retaining walls, consolidation |
-| v0.5.x | Pile capacity, slope stability, liquefaction |
-| v1.0.0 | Stable API, full documentation, public open-source |
-
----
-
-## Running the Tests
+## Running the tests
 
 ```bash
+git clone https://github.com/geoeq/geoeq.git
+cd geoeq
 pip install -e ".[dev]"
-pytest
+pytest                       # -> 563 passed
 ```
 
 ---
 
 ## Contributing
 
-The repository is **private** until approximately **v0.5**. Until then, feedback and feature requests are welcome.
+The repository is open for issue reports and feedback. Pull requests are welcome once the project reaches v1.0; until then, please open an issue first to discuss any proposed change.
+
+- Found a formula bug or a unit mistake? [Open an issue](https://github.com/geoeq/geoeq/issues) with a textbook citation.
+- Want a function prioritised? Check [Implementation.md](Implementation.md) and note which version you need it in.
+- Using GeoEq in coursework or research? Open an issue tagged `usage` — we would like to cite real-world uses in the JOSS paper.
+
+---
+
+## Citation
+
+If you use GeoEq in academic work, please cite:
+
+```bibtex
+@software{geoeq2026,
+  author       = {Malo, Ripon Chandra},
+  title        = {GeoEq: A Python Library for Geotechnical Engineering},
+  year         = {2026},
+  version      = {0.1.0},
+  url          = {https://github.com/geoeq/geoeq},
+  license      = {MIT}
+}
+```
 
 ---
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.  
-Copyright © 2026 Ripon Chandra Malo
+MIT — free for personal, commercial, consulting, and enterprise use forever. See [LICENSE](LICENSE).
+
+Copyright © 2026 Ripon Chandra Malo · University of Utah
+
+---
+
+<div align="center">
+<sub><i>GeoEq — geotechnical engineering, solved in Python.</i></sub>
+<br/>
+<sub>If GeoEq saved you a spreadsheet, please <a href="https://github.com/geoeq/geoeq">star the repository</a> — it is the cheapest way to help.</sub>
+</div>
