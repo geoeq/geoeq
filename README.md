@@ -224,8 +224,8 @@ pytest                       # -> 563 passed
 The repository is open for issue reports and feedback. Pull requests are welcome once the project reaches v1.0; until then, please open an issue first to discuss any proposed change.
 
 - Found a formula bug or a unit mistake? [Open an issue](https://github.com/geoeq/geoeq/issues) with a textbook citation.
-- Want a function prioritised? Check [Implementation.md](Implementation.md) and note which version you need it in.
-- Using GeoEq in coursework or research? Open an issue tagged `usage` — we would like to cite real-world uses in the JOSS paper.
+- Want a function prioritised? Open an issue tagged `enhancement` describing the use case.
+- Using GeoEq in coursework or research? Open an issue tagged `usage` — we would like to hear about real-world uses.
 
 ---
 

@@ -65,6 +65,8 @@ Project guide/
 test_and_tutorial/
 AI_GUIDE.md
 CLAUDE.md
+Implementation.md
+PUBLISHING.md
 
 # ----- AI tooling local state (NEVER commit) --------------------------------
 .claude/

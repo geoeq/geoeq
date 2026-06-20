@@ -17,6 +17,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.1] - 2026-05-20
+
+### Removed
+- Internal planning documents removed from the public repository
+  (`Implementation.md`, `PUBLISHING.md`). These remain available
+  locally for maintainers.
+- README "Contributing" section no longer references the internal
+  roadmap document.
+
+### Changed
+- `pyproject.toml` version bumped to `0.1.1`.
+- `MANIFEST.in` no longer ships `Implementation.md` in the sdist.
+- `.gitignore` extended to keep maintainer-only documents out of
+  the public repository.
+
+### Note
+This release contains no functional code changes from v0.1.0. It is
+a documentation-hygiene release to remove internal planning
+material from the public distribution.
+
+---
+
 ## [0.1.0] - 2026-05-20
 
 ### Added — Complete Engineering Design Module (`ge.design`)

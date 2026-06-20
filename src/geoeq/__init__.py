@@ -15,7 +15,7 @@ Documentation: https://geoeq.github.io/user-guide.html
 License:       MIT
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Ripon Chandra Malo"
 __license__ = "MIT"
 

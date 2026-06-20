@@ -2,7 +2,6 @@ include LICENSE
 include README.md
 include CHANGELOG.md
 include SECURITY.md
-include Implementation.md
 include pyproject.toml
 
 # Ship the type marker
