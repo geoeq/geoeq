@@ -17,6 +17,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.2] - 2026-05-20
+
+### Fixed
+- Added explicit `src/geoeq/viz/__init__.py` so the `geoeq.viz`
+  submodule is recognised by static documentation generators
+  (mkdocstrings / griffe). Without this file, `geoeq.viz` was a
+  namespace package — fine at runtime but invisible to static
+  parsers, which caused the documentation site's API reference
+  generation to fail on `ge.grain_size_plot` and related symbols.
+
+### Note
+No functional code changes from v0.1.1. This is a packaging
+hygiene release to support the public documentation build at
+`docs.geoeq.org`. All 563 tests still pass.
+
+---
+
 ## [0.1.1] - 2026-05-20
 
 ### Removed

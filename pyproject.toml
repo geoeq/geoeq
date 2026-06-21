@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "geoeq"
-version = "0.1.1"
+version = "0.1.2"
 description = "A clean, validated Python library for the complete onshore geotechnical workflow — lab tests, site investigation, design, dynamics, and data exchange."
 readme = "README.md"
 license = {text = "MIT"}
