@@ -104,7 +104,7 @@ print(fs)
 
 ## Capabilities
 
-A working summary of what ships in v0.1.0. The complete per-function reference lives in the [handbook](docs/GeoEq-Handbook.tex) and the [online guide](https://geoeq.github.io/user-guide.html).
+A working summary of what ships in v0.1.2. The complete per-function reference lives in the [handbook](docs/GeoEq-Handbook.tex) and the [online guide](https://docs.geoeq.org).
 
 ### Soil properties and classification
 
