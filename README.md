@@ -238,7 +238,7 @@ If you use GeoEq in academic work, please cite:
   author       = {Malo, Ripon Chandra},
   title        = {GeoEq: A Python Library for Geotechnical Engineering},
   year         = {2026},
-  version      = {0.1.0},
+  version      = {0.1.2},
   url          = {https://github.com/geoeq/geoeq},
   license      = {MIT}
 }
