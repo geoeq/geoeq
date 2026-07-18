@@ -11,11 +11,9 @@ Only the latest minor version receives security and bug fixes.
 
 ## Reporting a vulnerability
 
-If you discover a security issue in `geoeq`, **please do not open a public
-issue.** Email the maintainer directly:
-
-- **hello@matily.org** — subject line `[geoeq-security] <short
-  description>`
+If you discover a security issue in `geoeq`, please
+[open a GitHub issue](https://github.com/geoeq/geoeq/issues/new) with the
+label `security`.
 
 We aim to:
 
