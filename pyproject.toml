@@ -11,10 +11,10 @@ license = {text = "Apache-2.0"}
 
 requires-python = ">=3.9"
 authors = [
-    {name = "Ripon Chandra Malo", email = "hello@matily.org"},
+    {name = "Ripon Chandra Malo", email = "support@matily.org"},
 ]
 maintainers = [
-    {name = "Ripon Chandra Malo", email = "hello@matily.org"},
+    {name = "Ripon Chandra Malo", email = "support@matily.org"},
 ]
 keywords = [
     "geoeq",
