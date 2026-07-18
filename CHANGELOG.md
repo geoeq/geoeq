@@ -17,6 +17,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.3] - 2026-07-18
+
+### Changed
+- **License changed from MIT to Apache 2.0** — same permissive freedoms,
+  now with an explicit patent grant and contributor patent protection.
+  Added `NOTICE` file per Apache 2.0 convention.
+- Maintainer contact email updated to `hello@matily.org`.
+- Security policy now directs reports to GitHub Issues instead of email.
+- README redesigned: animated SVG hero banner, download badges,
+  SEO-optimised structure, and a tutorials index.
+
+### Note
+No functional code changes. All 563 tests still pass.
+
+---
+
 ## [0.1.2] - 2026-05-20
 
 ### Fixed

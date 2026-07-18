@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "geoeq"
-version = "0.1.2"
+version = "0.1.3"
 description = "A clean, validated Python library for the complete onshore geotechnical workflow — lab tests, site investigation, design, dynamics, and data exchange."
 readme = "README.md"
 license = {text = "Apache-2.0"}
@@ -95,7 +95,7 @@ Changelog     = "https://github.com/geoeq/geoeq/blob/main/CHANGELOG.md"
 Source        = "https://github.com/geoeq/geoeq"
 
 [tool.setuptools]
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "NOTICE"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

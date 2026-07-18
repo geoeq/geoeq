@@ -15,7 +15,7 @@ Documentation: https://geoeq.github.io/user-guide.html
 License:       Apache-2.0
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "Ripon Chandra Malo"
 __license__ = "Apache-2.0"
 

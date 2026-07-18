@@ -109,7 +109,7 @@ print(fs)   # {'FS': 0.58, 'liquefies': True, ...}
 
 ## Capabilities
 
-Full per-function reference at [geoeq.org](https://geoeq.org). Below is what ships in v0.1.2.
+Full per-function reference at [geoeq.org](https://geoeq.org). Below is what ships in v0.1.3.
 
 ### Soil Properties & Classification
 
@@ -262,7 +262,7 @@ Pull requests are welcome once the project reaches v1.0; until then, please open
   author       = {Malo, Ripon Chandra},
   title        = {GeoEq: A Python Library for Geotechnical Engineering},
   year         = {2026},
-  version      = {0.1.2},
+  version      = {0.1.3},
   url          = {https://github.com/geoeq/geoeq},
   license      = {Apache-2.0}
 }
