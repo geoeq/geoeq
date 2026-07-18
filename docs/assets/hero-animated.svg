@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1a2d50"/>
+    </linearGradient>
+    <linearGradient id="ground1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B7355"/>
+      <stop offset="100%" stop-color="#6B5335"/>
+    </linearGradient>
+    <linearGradient id="ground2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A0522D"/>
+      <stop offset="100%" stop-color="#7A3B1E"/>
+    </linearGradient>
+    <linearGradient id="ground3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5C4033"/>
+      <stop offset="100%" stop-color="#3E2723"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="50%" stop-color="#1E88E5"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2196F3"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#B3D9FF"/>
+    </linearGradient>
+    <!-- Particle dots pattern for sand -->
+    <pattern id="dots" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.8" fill="rgba(255,255,255,0.08)"/>
+      <circle cx="6" cy="6" r="0.6" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="320" fill="url(#sky)"/>
+
+  <!-- Grid lines (engineering paper feel) -->
+  <g opacity="0.06" stroke="#4488cc">
+    <line x1="0" y1="80" x2="900" y2="80" stroke-width="0.5"/>
+    <line x1="0" y1="120" x2="900" y2="120" stroke-width="0.5"/>
+    <line x1="0" y1="160" x2="900" y2="160" stroke-width="0.5"/>
+    <line x1="0" y1="200" x2="900" y2="200" stroke-width="0.5"/>
+    <line x1="0" y1="240" x2="900" y2="240" stroke-width="0.5"/>
+    <line x1="0" y1="280" x2="900" y2="280" stroke-width="0.5"/>
+    <line x1="150" y1="0" x2="150" y2="320" stroke-width="0.5"/>
+    <line x1="300" y1="0" x2="300" y2="320" stroke-width="0.5"/>
+    <line x1="450" y1="0" x2="450" y2="320" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="320" stroke-width="0.5"/>
+    <line x1="750" y1="0" x2="750" y2="320" stroke-width="0.5"/>
+  </g>
+
+  <!-- Soil layers -->
+  <rect x="0" y="155" width="900" height="50" fill="url(#ground1)" opacity="0.9">
+    <animate attributeName="opacity" values="0;0.9" dur="1.2s" fill="freeze"/>
+  </rect>
+  <rect x="0" y="155" width="900" height="50" fill="url(#dots)"/>
+
+  <rect x="0" y="205" width="900" height="55" fill="url(#ground2)" opacity="0.9">
+    <animate attributeName="opacity" values="0;0.9" dur="1.4s" fill="freeze"/>
+  </rect>
+
+  <rect x="0" y="260" width="900" height="60" fill="url(#ground3)" opacity="0.9">
+    <animate attributeName="opacity" values="0;0.9" dur="1.6s" fill="freeze"/>
+  </rect>
+
+  <!-- Water table line -->
+  <line x1="0" y1="190" x2="900" y2="190" stroke="#1E88E5" stroke-width="1.5" stroke-dasharray="8,4" opacity="0">
+    <animate attributeName="opacity" values="0;0.7" dur="2s" begin="0.8s" fill="freeze"/>
+  </line>
+  <text x="860" y="186" fill="#42A5F5" font-family="monospace" font-size="9" text-anchor="end" opacity="0">
+    ▼ GWT
+    <animate attributeName="opacity" values="0;0.7" dur="1s" begin="1.5s" fill="freeze"/>
+  </text>
+
+  <!-- Stress bulb (Boussinesq isobars) -->
+  <g opacity="0" transform="translate(680, 145)">
+    <animate attributeName="opacity" values="0;0.5" dur="1.5s" begin="1s" fill="freeze"/>
+    <!-- Foundation block -->
+    <rect x="-25" y="-12" width="50" height="12" fill="#90A4AE" rx="1"/>
+    <text x="0" y="-16" fill="#B0BEC5" font-family="monospace" font-size="8" text-anchor="middle">q</text>
+    <!-- Isobars -->
+    <ellipse cx="0" cy="30" rx="35" ry="25" fill="none" stroke="#EF5350" stroke-width="1" opacity="0.6"/>
+    <ellipse cx="0" cy="50" rx="55" ry="42" fill="none" stroke="#FF7043" stroke-width="0.8" opacity="0.4"/>
+    <ellipse cx="0" cy="70" rx="70" ry="55" fill="none" stroke="#FFA726" stroke-width="0.6" opacity="0.25"/>
+    <!-- σz arrows -->
+    <line x1="0" y1="0" x2="0" y2="85" stroke="#EF5350" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.5"/>
+    <text x="5" y="90" fill="#EF5350" font-family="monospace" font-size="7" opacity="0.6">σz</text>
+  </g>
+
+  <!-- SPT sampler animation -->
+  <g opacity="0" transform="translate(200, 130)">
+    <animate attributeName="opacity" values="0;0.6" dur="1s" begin="1.2s" fill="freeze"/>
+    <!-- Borehole -->
+    <rect x="-4" y="0" width="8" height="100" fill="#1a2d50" opacity="0.6" rx="1"/>
+    <!-- Split spoon sampler -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,-15;0,50;0,50" dur="2.5s" begin="2s" repeatCount="indefinite"/>
+      <rect x="-5" y="10" width="10" height="20" fill="#78909C" rx="1"/>
+      <rect x="-3" y="30" width="6" height="15" fill="#90A4AE" rx="1"/>
+      <text x="14" y="22" fill="#B0BEC5" font-family="monospace" font-size="8">N₆₀</text>
+    </g>
+  </g>
+
+  <!-- Mohr circle (left side) -->
+  <g opacity="0" transform="translate(100, 80)">
+    <animate attributeName="opacity" values="0;0.45" dur="1.5s" begin="0.5s" fill="freeze"/>
+    <!-- Axes -->
+    <line x1="-40" y1="0" x2="60" y2="0" stroke="#546E7A" stroke-width="0.7"/>
+    <line x1="-40" y1="0" x2="-40" y2="-50" stroke="#546E7A" stroke-width="0.7"/>
+    <text x="62" y="4" fill="#546E7A" font-family="monospace" font-size="7">σ</text>
+    <text x="-50" y="-48" fill="#546E7A" font-family="monospace" font-size="7">τ</text>
+    <!-- Circles -->
+    <circle cx="10" cy="0" r="30" fill="none" stroke="#42A5F5" stroke-width="1">
+      <animate attributeName="r" values="0;30" dur="1s" begin="1.5s" fill="freeze"/>
+    </circle>
+    <circle cx="25" cy="0" r="40" fill="none" stroke="#66BB6A" stroke-width="0.8" opacity="0.6">
+      <animate attributeName="r" values="0;40" dur="1s" begin="1.8s" fill="freeze"/>
+    </circle>
+    <!-- Failure envelope -->
+    <line x1="-35" y1="-8" x2="55" y2="-38" stroke="#EF5350" stroke-width="1" stroke-dasharray="4,3">
+      <animate attributeName="opacity" values="0;0.8" dur="0.8s" begin="2.2s" fill="freeze"/>
+    </line>
+    <text x="35" y="-40" fill="#EF5350" font-family="monospace" font-size="7" opacity="0">
+      φ
+      <animate attributeName="opacity" values="0;0.7" dur="0.5s" begin="2.5s" fill="freeze"/>
+    </text>
+  </g>
+
+  <!-- Settlement curve (bottom right) -->
+  <g opacity="0" transform="translate(760, 210)">
+    <animate attributeName="opacity" values="0;0.45" dur="1.5s" begin="1.5s" fill="freeze"/>
+    <line x1="0" y1="0" x2="80" y2="0" stroke="#546E7A" stroke-width="0.7"/>
+    <line x1="0" y1="0" x2="0" y2="60" stroke="#546E7A" stroke-width="0.7"/>
+    <text x="82" y="4" fill="#546E7A" font-family="monospace" font-size="7">t</text>
+    <text x="-4" y="65" fill="#546E7A" font-family="monospace" font-size="7">δ</text>
+    <path d="M0,0 C10,20 25,35 40,42 S65,50 80,52" fill="none" stroke="#FFA726" stroke-width="1.2">
+      <animate attributeName="stroke-dashoffset" from="120" to="0" dur="2s" begin="2s" fill="freeze"/>
+      <set attributeName="stroke-dasharray" to="120"/>
+    </path>
+  </g>
+
+  <!-- Grain size curve (bottom left) -->
+  <g opacity="0" transform="translate(50, 250)">
+    <animate attributeName="opacity" values="0;0.35" dur="1s" begin="1.8s" fill="freeze"/>
+    <line x1="0" y1="0" x2="90" y2="0" stroke="#546E7A" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="0" y2="-40" stroke="#546E7A" stroke-width="0.5"/>
+    <path d="M5,-2 C15,-3 25,-8 40,-18 S60,-32 85,-38" fill="none" stroke="#66BB6A" stroke-width="1">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="1.5s" begin="2.2s" fill="freeze"/>
+      <set attributeName="stroke-dasharray" to="100"/>
+    </path>
+    <text x="92" y="4" fill="#546E7A" font-family="monospace" font-size="6">D (mm)</text>
+    <text x="-2" y="-42" fill="#546E7A" font-family="monospace" font-size="6">%</text>
+  </g>
+
+  <!-- Title -->
+  <text x="450" y="58" fill="url(#titleGrad)" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-weight="700" font-size="48" text-anchor="middle" letter-spacing="3" opacity="0">
+    GeoEq
+    <animate attributeName="opacity" values="0;1" dur="1s" begin="0.3s" fill="freeze"/>
+  </text>
+
+  <!-- Tagline -->
+  <text x="450" y="85" fill="#7EB8E0" font-family="'Segoe UI', system-ui, sans-serif" font-weight="300" font-size="16" text-anchor="middle" opacity="0">
+    Geotechnical engineering, solved in Python.
+    <animate attributeName="opacity" values="0;0.9" dur="1s" begin="0.6s" fill="freeze"/>
+  </text>
+
+  <!-- Code snippet -->
+  <g opacity="0" transform="translate(310, 100)">
+    <animate attributeName="opacity" values="0;1" dur="1s" begin="0.8s" fill="freeze"/>
+    <rect x="0" y="0" width="280" height="42" rx="6" fill="#0d1b2a" opacity="0.85" stroke="#1e3a5f" stroke-width="0.5"/>
+    <!-- Terminal dots -->
+    <circle cx="12" cy="8" r="3" fill="#ff5f56" opacity="0.7"/>
+    <circle cx="22" cy="8" r="3" fill="#ffbd2e" opacity="0.7"/>
+    <circle cx="32" cy="8" r="3" fill="#27c93f" opacity="0.7"/>
+    <text x="14" y="27" fill="#7EB8E0" font-family="'SF Mono', 'Fira Code', monospace" font-size="11">
+      <tspan fill="#C792EA">import</tspan>
+      <tspan fill="#d6deeb"> geoeq </tspan>
+      <tspan fill="#C792EA">as</tspan>
+      <tspan fill="#d6deeb"> ge</tspan>
+    </text>
+    <text x="14" y="39" fill="#546E7A" font-family="'SF Mono', 'Fira Code', monospace" font-size="9">
+      170+ validated functions · Apache 2.0
+    </text>
+  </g>
+
+  <!-- Animated particle shower (soil particles falling) -->
+  <g opacity="0.3">
+    <circle cx="320" cy="0" r="1.5" fill="#8B7355">
+      <animate attributeName="cy" values="-10;155" dur="4s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0" dur="4s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="500" cy="0" r="1" fill="#A0522D">
+      <animate attributeName="cy" values="-20;155" dur="5s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0" dur="5s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="420" cy="0" r="1.2" fill="#8B7355">
+      <animate attributeName="cy" values="-5;155" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="580" cy="0" r="0.8" fill="#A0522D">
+      <animate attributeName="cy" values="-15;155" dur="4.5s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0" dur="4.5s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Version tag -->
+  <g opacity="0" transform="translate(450, 310)">
+    <animate attributeName="opacity" values="0;0.5" dur="1s" begin="2s" fill="freeze"/>
+    <text x="0" y="0" fill="#546E7A" font-family="monospace" font-size="9" text-anchor="middle">
+      v0.1.2 · 563 tests · Python 3.9+
+    </text>
+  </g>
+</svg>

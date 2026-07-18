@@ -12,12 +12,12 @@ modelling, engineering design, soil dynamics, and data I/O.
 Homepage:      https://geoeq.github.io
 Repository:    https://github.com/geoeq/geoeq
 Documentation: https://geoeq.github.io/user-guide.html
-License:       MIT
+License:       Apache-2.0
 """
 
 __version__ = "0.1.2"
 __author__ = "Ripon Chandra Malo"
-__license__ = "MIT"
+__license__ = "Apache-2.0"
 
 from geoeq.soil.properties import (
     void_ratio,

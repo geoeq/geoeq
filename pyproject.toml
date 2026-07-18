@@ -7,7 +7,7 @@ name = "geoeq"
 version = "0.1.2"
 description = "A clean, validated Python library for the complete onshore geotechnical workflow — lab tests, site investigation, design, dynamics, and data exchange."
 readme = "README.md"
-license = {text = "MIT"}
+license = {text = "Apache-2.0"}
 
 requires-python = ">=3.9"
 authors = [
@@ -56,7 +56,7 @@ classifiers = [
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",

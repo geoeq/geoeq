@@ -61,6 +61,8 @@ docs/*.ind
 
 # ----- Local-only sibling repos and notes -----------------------------------
 geoeq.github.io/
+geoeqlanding/
+geoeqdocs/
 Project guide/
 test_and_tutorial/
 AI_GUIDE.md
