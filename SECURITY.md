@@ -14,7 +14,7 @@ Only the latest minor version receives security and bug fixes.
 If you discover a security issue in `geoeq`, **please do not open a public
 issue.** Email the maintainer directly:
 
-- **riponce.buet@gmail.com** — subject line `[geoeq-security] <short
+- **hello@matily.org** — subject line `[geoeq-security] <short
   description>`
 
 We aim to:
