@@ -1,7 +1,7 @@
 """
 GeoEq -- A Python library for geotechnical engineering calculations.
 
-A clean, validated, MIT-licensed library covering the complete
+A clean, validated, Apache 2.0-licensed library covering the complete
 onshore geotechnical workflow under one flat namespace:
 soil properties, lab testing, site investigation, layered ground
 modelling, engineering design, soil dynamics, and data I/O.
@@ -36,6 +36,10 @@ from geoeq.soil.classification import (
     classify_uscs,
     classify_aashto,
     plasticity_chart,
+)
+from geoeq.soil.texture import (
+    classify_usda,
+    texture_triangle,
 )
 from geoeq.soil.sieve import sieve_ana
 from geoeq.soil.hydrometer import hydro_ana
