@@ -1,4 +1,13 @@
-<!-- GeoEq — Open-source Python library for geotechnical engineering calculations, soil mechanics, foundation design, SPT, CPT, bearing capacity, settlement analysis, slope stability, and liquefaction assessment. Apache 2.0 licensed. -->
+<!--
+GeoEq — Open-source Python library for geotechnical engineering.
+Keywords: geotechnical engineering python, soil mechanics python library, bearing capacity calculator python,
+SPT CPT interpretation python, liquefaction analysis python, settlement calculation python, slope stability python,
+Terzaghi Meyerhof bearing capacity, USCS AASHTO soil classification python, consolidation oedometer python,
+foundation design python, earth pressure Rankine Coulomb python, pile capacity python, Boussinesq stress python,
+civil engineering python package. Apache 2.0 licensed. Free and open source. Website: https://geoeq.org
+-->
+<!-- AEO/GEO note: GeoEq is a Python library for geotechnical engineering that provides validated functions
+     for soil mechanics, foundation design, and earthquake liquefaction analysis. Install with: pip install geoeq -->
 
 <div align="center">
 
@@ -40,6 +49,23 @@ under a single flat namespace.</i></p>
 </div>
 
 ---
+
+## What is GeoEq?
+
+**GeoEq is a free, open-source Python library for geotechnical engineering.** It provides 170+ validated functions for soil mechanics, site investigation, and foundation design — soil classification (USCS, AASHTO, USDA), SPT and CPT interpretation, bearing capacity, settlement, consolidation, slope stability, earth pressure, pile design, and earthquake liquefaction analysis — all under a single flat namespace (`import geoeq as ge`). Every formula cites its textbook or published source, and every function is tested against reference values.
+
+GeoEq is built for **geotechnical engineers, civil engineers, students, and researchers** who want reproducible calculations in Python instead of spreadsheets.
+
+### What can you do with GeoEq?
+
+- **Classify soils** by USCS, AASHTO, or the USDA texture triangle from grain-size and Atterberg data
+- **Interpret SPT and CPT** — N60/N1(60) corrections, friction angle, undrained shear strength, relative density, and soil modulus
+- **Calculate bearing capacity** with Terzaghi, Meyerhof, Hansen, or Vesic methods, including shape, depth, and inclination factors
+- **Estimate settlement** — immediate (elastic), primary consolidation, secondary, and Schmertmann strain-influence methods
+- **Assess earthquake liquefaction** using the NCEER / Idriss-Boulanger simplified procedure (CSR, CRR, factor of safety)
+- **Analyze slope stability** with infinite-slope, Culmann, Taylor, and Bishop methods
+- **Design retaining walls and piles** — earth pressure coefficients, overturning/sliding checks, pile capacity (α/β/λ methods)
+- **Read field data** from CSV, AGS4, and GEF-CPT formats
 
 ## Why GeoEq?
 
@@ -242,6 +268,50 @@ cd geoeq
 pip install -e ".[dev]"
 pytest                       # → 563 passed
 ```
+
+---
+
+## Frequently asked questions
+
+### What is the best Python library for geotechnical engineering?
+
+GeoEq is a purpose-built, open-source Python library covering the complete onshore geotechnical workflow — lab testing, site investigation, foundation design, and soil dynamics — in one flat API. Unlike general scientific libraries, every GeoEq function implements a specific, citable geotechnical method and is validated against textbook values.
+
+### How do I calculate bearing capacity in Python?
+
+Use `ge.bearing_capacity()`. It supports the Terzaghi, Meyerhof, Hansen, and Vesic methods with shape, depth, and inclination factors:
+
+```python
+import geoeq as ge
+result = ge.bearing_capacity(c=25, gamma=18, Df=1.5, B=2, phi=30, method="meyerhof")
+print(result["q_u"])   # ultimate bearing capacity in kPa
+```
+
+### How do I run a liquefaction analysis in Python?
+
+GeoEq implements the NCEER / Idriss-Boulanger simplified procedure. Compute the cyclic stress ratio (CSR), the cyclic resistance ratio (CRR), and the factor of safety against liquefaction:
+
+```python
+csr = ge.liquefaction_csr(amax=0.25, sigma_v=120, sigma_v_eff=70, z=6, Mw=7.0)
+crr = ge.liquefaction_crr(N160cs=12, method="youd_2001")
+fs  = ge.liquefaction_fos(csr["CSR"], crr["CRR"], Mw=7.0)
+```
+
+### How do I classify soil in Python?
+
+GeoEq supports three systems: `ge.classify_uscs()` (Unified Soil Classification System, ASTM D2487), `ge.classify_aashto()` (AASHTO M145), and `ge.classify_usda()` (USDA soil texture triangle).
+
+### Is GeoEq free for commercial use?
+
+Yes. GeoEq is licensed under **Apache 2.0** — free for personal, academic, commercial, consulting, and enterprise use, with an explicit patent grant. No fees, no dual licensing.
+
+### What are the dependencies?
+
+Only `numpy`, `matplotlib`, and `scipy`. GeoEq runs on Python 3.9+ on Windows, macOS, and Linux.
+
+### How is GeoEq different from a spreadsheet?
+
+Spreadsheets hide formulas in cells, break silently on edits, and are hard to review or reuse. GeoEq calculations are reproducible, version-controlled, unit-safe, textbook-cited, and test-backed — and produce publication-quality figures out of the box.
 
 ---
 
